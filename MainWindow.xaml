@@ -1,0 +1,37 @@
+﻿<Window x:Class="MiniForensicAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MiniForensicAnalyzer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+
+            <Button x:Name="OpenFileButton"
+                    Width="120"
+                    Height="35"
+                    Click="OpenFile_Click">
+                파일 열기
+            </Button>
+
+            <TextBlock x:Name="FilePathText"
+                       Margin="10,8,0,0" />
+        </StackPanel>
+
+        <TextBox x:Name="HexViewr"
+                     Grid.Row="1"
+                     Margin="0,10,0,0"
+                     FontFamily="Consolas"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>
