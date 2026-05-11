@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace MiniForensicAnalyzer
 {
@@ -64,6 +65,30 @@ namespace MiniForensicAnalyzer
 
                 HashText.Text = $"SHA256: {sb}";
             }
+        }
+
+        private void StringButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(currentFilePath))
+            {
+                MessageBox.Show("파일을 먼저 선택하세요");
+                return;
+            }
+
+            byte[] fileBytes = File.ReadAllBytes(currentFilePath);
+
+            string text = Encoding.ASCII.GetString(fileBytes);
+
+            MatchCollection matches = Regex.Matches(text, @"[ -~]{4,}");
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Match match in matches) 
+            {
+                sb.AppendLine(match.Value);
+            }
+
+            StringViewer.Text = sb.ToString();
         }
     }
 }
