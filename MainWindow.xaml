@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
@@ -31,21 +32,37 @@
                 SHA256 계산
             </Button>
 
+            <Button x:Name="StringButton"
+                    Width="120"
+                    Height="35"
+                    Margin="10,0,0,0"
+                    Click="StringButton_Click">
+                문자열 추출
+            </Button>
+
             <TextBlock x:Name="FilePathText"
                        Margin="10,8,0,0" />
         </StackPanel>
 
-        <TextBlock x:Name="HashText"
+        <TextBlock Text="{Binding HashText}"
                    Grid.Row="1"
                    Margin="0,10,0,10"
                    TextWrapping="Wrap"/>
+
+        <TextBox Text="{Binding StringText}" 
+                 Grid.Row="2"
+                 Margin="0,10,0,0"
+                 FontFamily="Consolas"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"/>
         
-        <TextBox x:Name="HexViewr"
-                     Grid.Row="2"
-                     Margin="0,10,0,0"
-                     FontFamily="Consolas"
-                     AcceptsReturn="True"
-                     VerticalScrollBarVisibility="Auto"
-                     HorizontalScrollBarVisibility="Auto"/>
+        <TextBox Text="{Binding HexText}"
+                 Grid.Row="3"
+                 Margin="0,10,0,0"
+                 FontFamily="Consolas"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"/>
     </Grid>
 </Window>
