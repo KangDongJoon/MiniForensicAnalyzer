@@ -12,7 +12,6 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
@@ -48,21 +47,25 @@
                    Grid.Row="1"
                    Margin="0,10,0,10"
                    TextWrapping="Wrap"/>
-
-        <TextBox Text="{Binding StringText}" 
-                 Grid.Row="2"
-                 Margin="0,10,0,0"
-                 FontFamily="Consolas"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"/>
         
-        <TextBox Text="{Binding HexText}"
-                 Grid.Row="3"
-                 Margin="0,10,0,0"
+        <TabControl Grid.Row="2">
+
+            <TabItem Header="Hex">
+                <TextBox Text="{Binding HexText}"
                  FontFamily="Consolas"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto"
                  HorizontalScrollBarVisibility="Auto"/>
+            </TabItem>
+
+            <TabItem Header="Strings">
+                <TextBox Text="{Binding StringText}"
+                 FontFamily="Consolas"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"/>
+            </TabItem>
+            
+        </TabControl>
     </Grid>
 </Window>

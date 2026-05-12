@@ -4,6 +4,8 @@ using System.Text;
 using System.Windows;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using MiniForensicAnalyzer.ViewModels;
+using MiniForensicAnalyzer.Services;
 
 namespace MiniForensicAnalyzer
 {
@@ -12,9 +14,18 @@ namespace MiniForensicAnalyzer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel viewModel;
+        private FileAnalysisService service;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            viewModel = new MainViewModel();
+
+            DataContext = viewModel;
+
+            service = new FileAnalysisService();
         }
 
         private string currentFilePath;
@@ -27,17 +38,7 @@ namespace MiniForensicAnalyzer
                 currentFilePath = dialog.FileName;
                 FilePathText.Text = currentFilePath;
 
-                byte[] bytes = File.ReadAllBytes(currentFilePath);
-
-                StringBuilder hex = new StringBuilder();
-
-                foreach (byte b in bytes)
-                {
-                    hex.Append(b);
-                    hex.Append(' ');
-                }
-
-                HexViewr.Text = hex.ToString();
+                viewModel.HexText = service.GetHex(currentFilePath);
             }
         }
 
@@ -49,22 +50,7 @@ namespace MiniForensicAnalyzer
                 return;
             }
 
-            byte[] fileBytes = File.ReadAllBytes(currentFilePath);
-
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashBytes = sha256.ComputeHash(fileBytes);
-
-                StringBuilder sb = new StringBuilder();
-
-                foreach (byte b in hashBytes)
-                {
-                    sb.Append(b.ToString("X2"));
-
-                }
-
-                HashText.Text = $"SHA256: {sb}";
-            }
+            viewModel.HashText = $"SHA256: {service.CalculateSHA256(currentFilePath)}";
         }
 
         private void StringButton_Click(object sender, RoutedEventArgs e)
@@ -75,20 +61,7 @@ namespace MiniForensicAnalyzer
                 return;
             }
 
-            byte[] fileBytes = File.ReadAllBytes(currentFilePath);
-
-            string text = Encoding.ASCII.GetString(fileBytes);
-
-            MatchCollection matches = Regex.Matches(text, @"[ -~]{4,}");
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (Match match in matches) 
-            {
-                sb.AppendLine(match.Value);
-            }
-
-            StringViewer.Text = sb.ToString();
+            viewModel.StringText = service.ExtractString(currentFilePath);
         }
     }
 }
