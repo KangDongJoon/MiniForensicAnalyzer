@@ -36,8 +36,9 @@ namespace MiniForensicAnalyzer
             if (dialog.ShowDialog() == true)
             {
                 currentFilePath = dialog.FileName;
-                FilePathText.Text = currentFilePath;
-
+                viewModel.FilePath = currentFilePath;
+                
+                viewModel.FileInfoText = service.GetFileInfo(currentFilePath);
                 viewModel.HexText = service.GetHex(currentFilePath);
             }
         }
@@ -50,7 +51,7 @@ namespace MiniForensicAnalyzer
                 return;
             }
 
-            viewModel.HashText = $"SHA256: {service.CalculateSHA256(currentFilePath)}";
+            viewModel.HashText = service.CalculateSHA256(currentFilePath);
         }
 
         private void StringButton_Click(object sender, RoutedEventArgs e)

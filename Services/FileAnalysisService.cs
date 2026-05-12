@@ -7,17 +7,40 @@ namespace MiniForensicAnalyzer.Services
 {
     class FileAnalysisService
     {
+        public string GetFileInfo(string path)
+        {
+            FileInfo info = new FileInfo(path);
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"파일 크기: {info.Length} bytes");
+            sb.AppendLine($"생성일: {info.CreationTime}");
+            sb.AppendLine($"수정일: {info.LastWriteTime}");
+
+            return sb.ToString();
+        }
+
         public string GetHex(string path)
         {
             byte[] fileBytes = File.ReadAllBytes(path);
 
             StringBuilder sb = new StringBuilder();
 
-            foreach (byte b in fileBytes)
+            for (int i = 0; i < fileBytes.Length; i++)
             {
-                sb.Append(b.ToString("X2"));
-                sb.Append(" ");
+                if (i % 16 == 0)
+                {
+                    sb.Append($"{i:X8}  ");
+                }
+
+                sb.Append($"{fileBytes[i]:X2} ");
+
+                if ((i + 1) % 16 == 0)
+                {
+                    sb.AppendLine();
+                }
             }
+            
 
             return sb.ToString();
         }

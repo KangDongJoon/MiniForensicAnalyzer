@@ -4,6 +4,28 @@ namespace MiniForensicAnalyzer.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private string _filePath;
+        public string FilePath
+        {
+            get => _filePath;
+            set
+            {
+                _filePath = value;
+                OnPropertyChanged(nameof(FilePath));
+            }
+        }
+
+        private string _fileInfo;
+        public string FileInfoText
+        {
+            get => _fileInfo;
+            set
+            {
+                _fileInfo = value;
+                OnPropertyChanged(nameof(FileInfoText));
+            }
+        }
+
         private string _hexText;
         public string HexText
         {
